@@ -69,6 +69,11 @@ class Play extends Phaser.Scene {
             couchPlat.body.immovable = true
         }
 
+        // Yumi (player) Creation
+        Yumi = this.physics.add.sprite(32, centerY, 'Yumi').setOrigin(0.5)
+        Yumi.setCollideWorldBounds(true)
+        Yumi.setImmovable()
+
         // set up cursor keys (up to jump)
         cursors = this.input.keyboard.createCursorKeys();
         // setting restart button
@@ -195,6 +200,7 @@ class Play extends Phaser.Scene {
         if(Yumi.x < 0 || Yumi.y > 500 || speed < 0) { // player leaves screen, or gets too slow, then dies
             this.death.play();
             this.music.stop()
+            Yumi.destroy()
             this.scene.start("endingScene", score);
         }
 
