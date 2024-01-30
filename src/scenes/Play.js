@@ -16,7 +16,6 @@ class Play extends Phaser.Scene {
         // add death noise
         this.death = this.sound.add('cat-angry', {volume: .5})
 
-
         // add scrolling bg
         this.bg = this.add.tileSprite(0,0, 640, 480, 'catBG').setOrigin(0,0).setScrollFactor(0,1)
 
@@ -41,7 +40,7 @@ class Play extends Phaser.Scene {
         }
         this.scoreTop = this.add.text(0, 0, score, scoreConfig)
 
-        //adding pickup speed
+        //adding pickup speed --> HOW/WHEN TO UPDATE?
         speed = 1
 
         // carpet (ground) creation
@@ -99,6 +98,16 @@ class Play extends Phaser.Scene {
         // score celebration
         if (score%50 == 0 && score > 40){
             this.pointCelebrate.play()
+        }
+
+        // determining speed? speeds up with score inscrease, stops with collision with couch
+        if (hitCouch == true){ // collision with couch, slow down
+            speed--
+        }
+        else if (hitCouch != true && score >= 50){ //no collision with couch and increasing score
+            if (speed == 1){ // speed can't get more than 2
+                speed++
+            }
         }
         
         // animation styles (YIPPEE)
@@ -173,7 +182,7 @@ class Play extends Phaser.Scene {
         }
 
         // death noise + end scene
-        if(Yumi.x < 0 || Yumi.y > 500) { // player leaves screen and dies
+        if(Yumi.x < 0 || Yumi.y > 500 || speed < 0) { // player leaves screen, or gets too slow, then dies
             this.death.play();
             this.music.stop()
             this.scene.start("endingScene", score);
