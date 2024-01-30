@@ -76,15 +76,14 @@ class Play extends Phaser.Scene {
 
     update(){
 
-        // seeing if Yumi is blocked by couch
+        // checking if Yumi is blocked by couch
         var hitCouch = (game.physics.arcade.collide(Yumi, couches))
         // adding jump (just one)
         if (cursors.up.isDown && Yumi.body.touching.down && hitCouch){
             Yumi.body.velocity.y = -500
         }
 
-
-        // check for collisions
+        // check for collisions (couches and ground)
         var onCouch = (game.physics.arcade.collide(Yumi, couches) ||
         game.physics.arcade.collide(Yumi, carpet));
         
@@ -93,6 +92,7 @@ class Play extends Phaser.Scene {
             Yumi.x = 50
         }
 
+        // checking if yumi is on the ground
         var onCarpet = Yumi.body.touching.down
 
         //adding sound effects!
@@ -100,12 +100,7 @@ class Play extends Phaser.Scene {
         if (score%50 == 0 && score > 40){
             this.pointCelebrate.play()
         }
-        // death noise + end scene
-        if(Yumi.x < 0 || Yumi.y > 500) { // player leaves screen and dies
-            this.death.play();
-            this.scene.start("endingScene", score);
-        }
-
+        
         // animation styles (YIPPEE)
         if (cursors.right.isDown && speed == 1){
             this.bg.tilePosition.x -= 2
@@ -175,6 +170,13 @@ class Play extends Phaser.Scene {
             couches.forEach(function(c){
                 c.body.velocity.x = 0
             })
+        }
+
+        // death noise + end scene
+        if(Yumi.x < 0 || Yumi.y > 500) { // player leaves screen and dies
+            this.death.play();
+            this.music.stop()
+            this.scene.start("endingScene", score);
         }
 
         // update background
