@@ -1,5 +1,5 @@
 // Phoebe Royer
-// WIP TITLE
+// Yumi's Epic Adventure
 // Endless runner for CMPM120
 
 
@@ -53,3 +53,5 @@ let cursors;
 // Music from #Uppbeat (free for Creators!):
 // https://uppbeat.io/t/peter-lainson/immaginare
 // License code: O3NMYITZXNSGGQGJ
+
+// favicon: https://www.favicon.cc/?action=icon&file_id=948156
