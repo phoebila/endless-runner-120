@@ -46,6 +46,12 @@ let w = game.config.width;
 let h = game.config.height;
 let cursors;
 
+// play globals
+let score
+let speed
+let carpet
+let couches
+let Yumi
 
 
 // music credits:

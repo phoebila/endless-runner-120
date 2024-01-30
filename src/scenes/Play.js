@@ -10,9 +10,55 @@ class Play extends Phaser.Scene {
         this.music.setLoop(true);
         this.music.play();
 
-        //create barriers
+        // add scrolling bg
+        this.bg = this.add.tileSprite(0,0, 640, 480, 'catBG').setOrigin(0,0).setScrollFactor(0,1)
 
-        //make game
+        // REV PHYSICS ENGINE
+        game.physics.startSystem(Phaser.Physics.ARCADE)
+
+        // adding score keeping
+        score = 0
+
+        // display score
+        let scoreConfig = {
+            fontFamily: 'quicksand',
+            fontSize: '16px',
+            backgroundColor: '#b3325f',
+            color: '#000',
+            align: 'right',
+            padding: {
+            top: 5,
+            bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.scoreTop = this.add.text(0, 0, score, scoreConfig)
+
+        //adding pickup speed
+        speed = 1
+
+        // carpet (ground) creation
+        carpet = game.add.group()
+        carpet.enableBody = true
+
+        var carpetGr = carpet.create(0, game.world.height - 64, "carpet")
+        carpetGr.scale.setTo(2, 2)
+        carpetGr.body.immovable = true
+        
+
+        // green couch platforms
+        couches = game.add.group()
+        couches.enableBody = true
+
+        // adding randomized couch platforms
+        for (let i = 0; i < 8; i++){
+            let couchPlat = couches.create(game.rnd.integerInRange(300, game.stage.width),
+            game.rnd.integerInRange(game.height-100, game.height-300),
+            "couch")
+
+            couchPlat.scale.setTo(game.rnd.integerInRange(1, 10)/10, 1)
+            couchPlat.body.immovable = true
+        }
 
         // set up cursor keys (up to jump)
         cursors = this.input.keyboard.createCursorKeys();
@@ -22,8 +68,15 @@ class Play extends Phaser.Scene {
     }
 
     update(){
-        // check for player input
+        
         // check for collisions
+        var onCouch = (game.physics.arcade.collide(Yumi, couches) ||
+        game.physics.arcade.collide(Yumi, carpet));
+
+        var onCarpet = Yumi.body.touching.down
+
+        // update background
+        this.bg.setTilePosition(this.cameras.main.scrollX)
     }
 
     //other functions for:
