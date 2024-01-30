@@ -9,7 +9,7 @@ class Loading extends Phaser.Scene {
         let loadingBar = this.add.graphics();
         this.load.on('progress', (value) => {
             loadingBar.clear();                                 // reset fill/line style
-            loadingBar.fillStyle(0xFFFFFF, 1);                  // (color, alpha)
+            loadingBar.fillStyle(0xbf7f35, 1);                  // (color, alpha)
             loadingBar.fillRect(0, centerY, w * value, 5);  // (x, y, w, h)
         });
         this.load.on('complete', () => {
@@ -26,7 +26,7 @@ class Loading extends Phaser.Scene {
 
         // assets
             // yumi cat
-            // green couch barriers
+            // green couch platforms
         
         //load audio
             // start (cat squeak)
