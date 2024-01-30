@@ -13,6 +13,8 @@ class Title extends Phaser.Scene {
 
     update() {
         // update based on title input
-        // END --> this.scene.start('playScene')
+        if (Phaser.Input.Keyboard.JustDown(cursors.up)){
+            this.scene.start('playScene')
+        }
     }
 }

@@ -4,16 +4,17 @@ class Ending extends Phaser.Scene {
     }
 
     create(){
-        // check for high score
-
-        //display game over text
+        //display game over screen
 
         //set up cursor keys
+        keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
     }
 
     update(){
-        // key input to restart
 
-        // start next scene --> this.scene.start('playScene')
+        // key input to restart --> back to playScene
+        if (Phaser.Input.Keyboard.JustDown(keyRESET)){
+             this.scene.start('playScene')
+        }
     }
 }
