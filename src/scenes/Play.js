@@ -101,12 +101,12 @@ class Play extends Phaser.Scene {
         // animation styles (YIPPEE)
         if (cursors.up.isDown && speed == 1){
             this.bg.tilePosition.x -= 2
-            Yumi.animations.play("run")
+            Yumi.animations.play("walk")
             let height = 1
 
             // moving couches to left when yumi runs right
             couches.forEach(function(c){
-                c.body.velocity.x -= 800
+                c.body.velocity.x = -800
                 if (height > 3){
                     height = 1
                 }
@@ -119,7 +119,55 @@ class Play extends Phaser.Scene {
             })
             }
 
-        
+        // SPEEDING THINGS UP BUCKO
+        if (cursors.up.isDown && speed == 2){
+            this.bg.tilePosition.x -= 3
+            Yumi.animations.play("run")
+            let height = 1
+
+            couches.forEach(function(c){
+                c.body.velocity.x = -1000
+                if (height > 3){
+                    height = 1
+                }
+                if (c.x < -game.stage.width/3){
+                    c.x = game.rnd.integerInRange(game.width, game.width + 300)
+                    c.y = game.rnd.integerInRange(0, game.height- (100 * height))
+                    height++
+                    score++
+                }
+            })
+
+        }
+
+        // slowing things down
+        else if (cursors.up.isDown && speed == 0){
+            this.bg.tilePosition.x -= 1
+            Yumi.animations.play("crawl")
+            let height = 1
+
+            couches.forEach(function(c){
+                c.body.velocity.x = -600
+                if (height > 3){
+                    height = 1
+                }
+                if (c.x < -game.stage.width/3){
+                    c.x = game.rnd.integerInRange(game.width, game.width + 300)
+                    c.y = game.rnd.integerInRange(0, game.height- (100 * height))
+                    height++
+                    score++
+                }
+            })
+
+        }
+        // not moving
+        else {
+            Yumi.animations.stop()
+            Yumi.frame = 0
+            couches.forEach(function(c){
+                c.body.velocity.x = 0
+            })
+        }
 
         // update background
         this.bg.setTilePosition(this.cameras.main.scrollX)
