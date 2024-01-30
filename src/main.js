@@ -50,7 +50,6 @@ let score
 let speed
 let carpet //ground
 let couches //platform
-let Yumi //player character
 
 // set UI sizes
 let borderUISize = game.config.height / 15
