@@ -7,7 +7,8 @@ class Title extends Phaser.Scene {
         // display main menu
         // animation config
 
-        //define keys
+        // set up cursor keys
+        cursors = this.input.keyboard.createCursorKeys();  
     }
 
     update() {

@@ -15,5 +15,3 @@ let config = {
 let game = new Phaser.Game(config);
 
 // define globals
-// reserve keyboard bindings --> CHANGE
-let keyFIRE, keyRESET, keyLEFT, keyRIGHT

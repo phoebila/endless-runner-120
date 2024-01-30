@@ -9,6 +9,9 @@ class Play extends Phaser.Scene {
         //create barriers
 
         //make game
+
+        // set up cursor keys (up to jump)
+        cursors = this.input.keyboard.createCursorKeys();
     }
 
     update(){
