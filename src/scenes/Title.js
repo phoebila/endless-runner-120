@@ -5,6 +5,8 @@ class Title extends Phaser.Scene {
 
     create() {
         // display main menu
+        this.mainMenu =  this.add.tileSprite(0, 0, 640, 480, 'yumiMenu').setOrigin(0, 0)
+
         // animation config
 
         // set up cursor keys

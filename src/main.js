@@ -11,8 +11,6 @@
 // Include one or more animated characters that use a texture atlas* (1)
 // Simulate scrolling with a tileSprite (or equivalent means) (1)
 // Implement proper collision detection (via Arcade Physics or a custom routine) (1)
-// Have looping background music* (1)
-// Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design (1)
 // Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. (1)
 // Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. (1)
 // Be theoretically endless (1)
@@ -22,6 +20,9 @@
 // --------------------------------------------------------------
 
 // DONE ---------------------------------------------------------
+// Have looping background music* (1)
+// Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design (1)
+
 // --------------------------------------------------------------
 
 
@@ -39,3 +40,16 @@ let game = new Phaser.Game(config);
 
 // define globals
 let keyRESET
+let centerX = game.config.width/2;
+let centerY = game.config.height/2;
+let w = game.config.width;
+let h = game.config.height;
+let cursors;
+
+
+
+// music credits:
+
+// Music from #Uppbeat (free for Creators!):
+// https://uppbeat.io/t/peter-lainson/immaginare
+// License code: O3NMYITZXNSGGQGJ

@@ -5,6 +5,10 @@ class Play extends Phaser.Scene {
 
     create(){
         //set up audio
+        // adding music WORKS!!!
+        this.music = this.sound.add('bg-music', {volume: .1});
+        this.music.setLoop(true);
+        this.music.play();
 
         //create barriers
 
@@ -26,5 +30,5 @@ class Play extends Phaser.Scene {
         // level bump
         //collisions
 
-    // on death --> this.scene.start('endingScene')
+    // on death --> this.scene.start('endingScene'), stop music
 }

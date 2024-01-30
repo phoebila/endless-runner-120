@@ -9,7 +9,27 @@
     <script src = "./src/scenes/Title.js"></script>
     <script src = "./src/scenes/Play.js"></script>
     <script src = "./src/scenes/Ending.js"></script>
+    <script src = "./src/prefabs/platforms.js"></script>
     <script src = "./src/main.js"></script>
+
+    <link rel="preload" as="font" href='./assets/font/Quicksand-Bold.ttf' type="font/ttf" />
+    <!-- <div style="font-family: 'quicksand';">yippee</div> -->
+    <div style="font-family:quicksand; position:absolute; left:-1000px; visibility:hidden;">.</div>
+
+    <style>
+        body {
+            background-color: #bf7f35;
+        }
+        @font-face {
+            font-family: 'quicksand';
+            src: url('./assets/font/Quicksand-Bold.ttf');
+        }
+        canvas {
+            display : block;   
+            margin : auto;
+            font-family: 'quicksand';
+        }
+    </style>
 </head>
 <body>
     
