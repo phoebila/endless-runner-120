@@ -38,8 +38,11 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.scoreTop = this.add.text(0, 0, score, scoreConfig)
-
+        // adding score rectangle
+        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x62289c).setOrigin(0, 0)
+        // adding score text
+        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, score, scoreConfig)
+        
         //adding pickup speed --> HOW/WHEN TO UPDATE?
         speed = 1
 
@@ -127,6 +130,8 @@ class Play extends Phaser.Scene {
                     c.y = game.rnd.integerInRange(0, game.height- (100 * height))
                     height++
                     score++
+                    // update score
+                    this.scoreLeft.text = score
                 }
             })
             }
@@ -147,6 +152,8 @@ class Play extends Phaser.Scene {
                     c.y = game.rnd.integerInRange(0, game.height- (100 * height))
                     height++
                     score++
+                    // update score
+                    this.scoreLeft.text = score
                 }
             })
 
@@ -168,6 +175,8 @@ class Play extends Phaser.Scene {
                     c.y = game.rnd.integerInRange(0, game.height- (100 * height))
                     height++
                     score++
+                    // update score
+                    this.scoreLeft.text = score
                 }
             })
 
@@ -182,6 +191,7 @@ class Play extends Phaser.Scene {
         }
 
         // death noise + end scene
+        // on death --> this.scene.start('endingScene'), stop music
         if(Yumi.x < 0 || Yumi.y > 500 || speed < 0) { // player leaves screen, or gets too slow, then dies
             this.death.play();
             this.music.stop()
@@ -192,5 +202,4 @@ class Play extends Phaser.Scene {
         this.bg.setTilePosition(this.cameras.main.scrollX)
     }
 
-    // on death --> this.scene.start('endingScene'), stop music
 }
