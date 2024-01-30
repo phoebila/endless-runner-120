@@ -12,6 +12,9 @@ class Play extends Phaser.Scene {
 
         // set up cursor keys (up to jump)
         cursors = this.input.keyboard.createCursorKeys();
+        // setting restart button
+        keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
+
     }
 
     update(){
