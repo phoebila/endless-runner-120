@@ -98,6 +98,27 @@ class Play extends Phaser.Scene {
             this.scene.start("endingScene", score);
         }
 
+        // animation styles (YIPPEE)
+        if (cursors.up.isDown && speed == 1){
+            this.bg.tilePosition.x -= 2
+            Yumi.animations.play("run")
+            let height = 1
+
+            // moving couches to left when yumi runs right
+            couches.forEach(function(c){
+                c.body.velocity.x -= 800
+                if (height > 3){
+                    height = 1
+                }
+                if (c.x < -game.stage.width/3){
+                    c.x = game.rnd.integerInRange(game.width, game.width + 300)
+                    c.y = game.rnd.integerInRange(0, game.height- (100 * height))
+                    height++
+                    score++
+                }
+            })
+            }
+
         
 
         // update background
