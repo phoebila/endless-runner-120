@@ -10,6 +10,13 @@ class Play extends Phaser.Scene {
         this.music.setLoop(true);
         this.music.play();
 
+        // add point celebration noise
+        this.pointCelebrate = this.sound.add('cat-squeak',{volume: .5} )
+
+        // add death noise
+        this.death = this.sound.add('cat-angry', {volume: .5})
+
+
         // add scrolling bg
         this.bg = this.add.tileSprite(0,0, 640, 480, 'catBG').setOrigin(0,0).setScrollFactor(0,1)
 
@@ -68,12 +75,30 @@ class Play extends Phaser.Scene {
     }
 
     update(){
-        
+
         // check for collisions
         var onCouch = (game.physics.arcade.collide(Yumi, couches) ||
         game.physics.arcade.collide(Yumi, carpet));
+        
+        // pushing yumi back
+        if (onCouch){
+            Yumi.x = 50
+        }
 
         var onCarpet = Yumi.body.touching.down
+
+        //adding sound effects!
+        // score celebration
+        if (score%50 == 0 && score > 40){
+            this.pointCelebrate.play()
+        }
+        // death noise + end scene
+        if(Yumi.x < 0 || Yumi.y > 500) { // player leaves screen and dies
+            this.death.play();
+            this.scene.start("endingScene", score);
+        }
+
+        
 
         // update background
         this.bg.setTilePosition(this.cameras.main.scrollX)
