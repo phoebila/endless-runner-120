@@ -71,8 +71,6 @@ class Play extends Phaser.Scene {
 
         // Yumi (player) Creation
         Yumi = this.physics.add.sprite(32, centerY, 'Yumi').setOrigin(0.5)
-        Yumi.setCollideWorldBounds(true)
-        Yumi.setImmovable()
 
         // set up cursor keys (up to jump)
         cursors = this.input.keyboard.createCursorKeys();
