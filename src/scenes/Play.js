@@ -76,6 +76,14 @@ class Play extends Phaser.Scene {
 
     update(){
 
+        // seeing if Yumi is blocked by couch
+        var hitCouch = (game.physics.arcade.collide(Yumi, couches))
+        // adding jump (just one)
+        if (cursors.up.isDown && Yumi.body.touching.down && hitCouch){
+            Yumi.body.velocity.y = -500
+        }
+
+
         // check for collisions
         var onCouch = (game.physics.arcade.collide(Yumi, couches) ||
         game.physics.arcade.collide(Yumi, carpet));
@@ -99,7 +107,7 @@ class Play extends Phaser.Scene {
         }
 
         // animation styles (YIPPEE)
-        if (cursors.up.isDown && speed == 1){
+        if (cursors.right.isDown && speed == 1){
             this.bg.tilePosition.x -= 2
             Yumi.animations.play("walk")
             let height = 1
@@ -120,7 +128,7 @@ class Play extends Phaser.Scene {
             }
 
         // SPEEDING THINGS UP BUCKO
-        if (cursors.up.isDown && speed == 2){
+        if (cursors.right.isDown && speed == 2){
             this.bg.tilePosition.x -= 3
             Yumi.animations.play("run")
             let height = 1
@@ -141,7 +149,7 @@ class Play extends Phaser.Scene {
         }
 
         // slowing things down
-        else if (cursors.up.isDown && speed == 0){
+        else if (cursors.right.isDown && speed == 0){
             this.bg.tilePosition.x -= 1
             Yumi.animations.play("crawl")
             let height = 1
@@ -172,10 +180,6 @@ class Play extends Phaser.Scene {
         // update background
         this.bg.setTilePosition(this.cameras.main.scrollX)
     }
-
-    //other functions for:
-        // level bump
-        //collisions
 
     // on death --> this.scene.start('endingScene'), stop music
 }
