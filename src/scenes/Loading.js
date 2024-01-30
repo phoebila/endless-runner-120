@@ -46,8 +46,6 @@ class Loading extends Phaser.Scene {
 
             // looping background music
         this.load.audio('bg-music', "audio/immaginare-peter-lainson.mp3")
-
-        // load font?
     }
 
     create() {
