@@ -23,7 +23,7 @@ class Play extends Phaser.Scene {
 
         // Yumi (player) Creation ------------------------------
         yumiPlayer = this.physics.add.sprite(100, 425, "yumi")
-        yumiPlayer.setBounce(0.2)
+        yumiPlayer.setBounce(0.1)
         yumiPlayer.setColliderWorldBounds = true
 
         // yumi animation setup
@@ -64,18 +64,17 @@ class Play extends Phaser.Scene {
         // adding randomized couch platforms
         for (let i = 0; i < 8; i++){
             couches.create(Phaser.Math.Between(300, w),
-            Phaser.Math.Between(h-100, h-300),
-            "couch").setScale(Phaser.Math.Between(1, 10)/10, 1)
+            Phaser.Math.Between(h-50, h-300),
+            "couch").setScale(Phaser.Math.Between(3, 12)/10, 1).setImmovable(true)
         }
 
         for (const couch of couches.getChildren()){ // making sure the platforms don't fall through scene
-            couch.body.immovable = true
-            couch.body.moves = false
+            couch.body.setAllowGravity(false)
         }
         
         // carpet (ground) creation ------------------------------
         carpet = this.physics.add.staticGroup()
-        carpet.create(320.5, h+200, "carpet")
+        carpet.create(320.5, h+200, "carpet").refreshBody()
         
 
         this.physics.add.collider(yumiPlayer, carpet);
@@ -97,36 +96,18 @@ class Play extends Phaser.Scene {
             // yumiPlayer.setVelocityX(160)
             // yumiPlayer.anims.play('walk', true)
         // }
-
-        // physics of yumi not working?
-        // if (cursors.up.isDown && yumiPlayer.body.touching.down){
-        //     yumiPlayer.setVelocityY(-330)
-        //     this.jumpSfx.play()
-        // }
-        // --------------------------------------------------
-
         // checking if Yumi is blocked by couch
         var hitCouch = this.physics.collide(yumiPlayer, couches)
         if (hitCouch == true){
             console.log('couch has been collided with by yumi');
         }
+        // --------------------------------------------------
         
         // adding jump (just one)
         if (cursors.up.isDown && yumiPlayer.body.touching.down){
             yumiPlayer.body.velocity.y = -250
+            this.jumpSfx.play()
         }
-
-        // check for collisions (couches and ground)
-        // var onCouch = (this.physics.collide(yumiPlayer, couches) ||
-        // this.physics.collide(yumiPlayer, carpet));
-        
-        // pushing yumiPlayer back
-        // if (onCouch){
-        //     yumiPlayer.x -= 50
-        // }
-
-        // checking if yumi is on the ground
-        // var onCarpet = Yumi.body.touching.down
 
         //adding sound effects!
         // score celebration
@@ -137,7 +118,6 @@ class Play extends Phaser.Scene {
         // Basic side scrolling movement -------------------------------------------------------------------
         // Randomly generating green couches
 
-        // how to get side scrolling effect?
         if (cursors.right.isDown && speed == 1){
             this.bg.tilePositionX += 2
             let height = 1
@@ -145,22 +125,21 @@ class Play extends Phaser.Scene {
             yumiPlayer.anims.play('walk', true)
 
             // moving couches to left when yumi runs right
-            couches.children.each(c => {
-                // console.log(c);
-                c.body.velocity.x = -800
+            for (const couch of couches.getChildren()){
+                couch.body.velocity.x = -400
                 if (height > 3){
                     height = 1
                 }
-                if (c.x == centerY){ // fix this if statement
-                    console.log('inside the if statement');
-                    c.x = Phaser.Math.Between(game.config.width, game.config.width + 300)
-                    c.y = Phaser.Math.Between(0, h- (100 * height))
+
+                if (couch.x < -w/2){ // fix couch coord generation
+                    couch.x = Phaser.Math.Between(w, w + 300)
+                    couch.y = Phaser.Math.Between(0, h-(100 * height))
                     height++
                     score++
                     // update score
                     this.scoreLeft.text = score
                 }
-            })
+            }
         }
         // not moving
         else {
