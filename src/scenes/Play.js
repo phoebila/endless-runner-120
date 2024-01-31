@@ -232,5 +232,6 @@ class Play extends Phaser.Scene {
 // help with:
     // create groups with physics
         // how to detect collisions between groups and pc?
+        // how to fix pc body velocity?
     // fix Yumi (pc) animation
     // enable scrolling camera
