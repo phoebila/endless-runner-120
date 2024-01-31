@@ -57,27 +57,30 @@ class Play extends Phaser.Scene {
         
         speed = 1
 
-        
-
         // green couch platforms ---------------------------------
-        couches = this.physics.add.staticGroup({
-            runChildUpdate: true
-        })
+        couches = this.physics.add.group()
+        couches.enableBody = true
 
         // adding randomized couch platforms
         for (let i = 0; i < 8; i++){
             couches.create(Phaser.Math.Between(300, w),
             Phaser.Math.Between(h-100, h-300),
             "couch").setScale(Phaser.Math.Between(1, 10)/10, 1)
-
-            // couches.setScale(Phaser.Math.Between(1, 10)/10, 1)
-            couches.setImmoveable = true
         }
+
+        for (const couch of couches.getChildren()){ // making sure the platforms don't fall through scene
+            couch.body.immovable = true
+            couch.body.moves = false
+        }
+        
         // carpet (ground) creation ------------------------------
-        carpet = couches.create(320.5, h+200, "carpet")
+        carpet = this.physics.add.staticGroup()
+        carpet.create(320.5, h+200, "carpet")
+        
 
         this.physics.add.collider(yumiPlayer, carpet);
         this.physics.add.collider(yumiPlayer, couches);
+        this.physics.add.collider(couches, carpet);
 
         // set up cursor keys (up to jump) --------------------------
         cursors = this.input.keyboard.createCursorKeys();
@@ -148,7 +151,7 @@ class Play extends Phaser.Scene {
                 if (height > 3){
                     height = 1
                 }
-                if (c.x < -game.config.width/3){ // fix this if statement
+                if (c.x == centerY){ // fix this if statement
                     console.log('inside the if statement');
                     c.x = Phaser.Math.Between(game.config.width, game.config.width + 300)
                     c.y = Phaser.Math.Between(0, h- (100 * height))

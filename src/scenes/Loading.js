@@ -43,6 +43,8 @@ class Loading extends Phaser.Scene {
             // green couch platforms
         this.load.image('couch', 'sprite/couch.png')
 
+        // sign for controls
+
         
         //load audio
             // start (cat squeak)
