@@ -3,7 +3,7 @@ class Ending extends Phaser.Scene {
         super("endingScene")
     }
 
-    create(score){
+    create(){
         //display game over screen w/ score
         this.ending =  this.add.tileSprite(0, 0, 640, 480, 'gameOver').setOrigin(0, 0)
 

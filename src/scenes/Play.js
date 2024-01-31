@@ -91,6 +91,7 @@ class Play extends Phaser.Scene {
 
         if (cursors.left.isDown){
             yumiPlayer.x -= 15
+            this.bg.tilePositionX += 2
         }
 
         if (cursors.up.isDown){
