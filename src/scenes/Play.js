@@ -65,7 +65,7 @@ class Play extends Phaser.Scene {
         for (let i = 0; i < 8; i++){
             couches.create(Phaser.Math.Between(300, w),
             Phaser.Math.Between(h-50, h-300),
-            "couch").setScale(Phaser.Math.Between(3, 12)/10, 1).setImmovable(true)
+            "couch").setScale(Phaser.Math.Between(5, 12)/10, 1).setImmovable(true)
         }
 
         for (const couch of couches.getChildren()){ // making sure the platforms don't fall through scene
@@ -111,7 +111,7 @@ class Play extends Phaser.Scene {
 
         //adding sound effects!
         // score celebration
-        if (score%50 == 0 && score > 40){
+        if (score%50 == 0 && score > 40){ // more score silly number things?
             this.pointCelebrate.play()
         }
         
