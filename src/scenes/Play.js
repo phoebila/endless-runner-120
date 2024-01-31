@@ -63,6 +63,8 @@ class Play extends Phaser.Scene {
         couches = this.add.group()
         couches.enableBody = true
 
+        console.log(`couches physics: ${couches.enableBody}`);
+
         // adding randomized couch platforms
         for (let i = 0; i < 8; i++){
             let couchPlat = couches.create(Phaser.Math.Between(300, w),
@@ -101,6 +103,9 @@ class Play extends Phaser.Scene {
 
         // checking if Yumi is blocked by couch
         var hitCouch = this.physics.collide(yumiPlayer, couches)
+        if (hitCouch == true){
+            console.log('couch has been collided with by yumi');
+        }
         
         // adding jump (just one)
         // if (cursors.up.isDown && yumiPlayer.body.touching.down && hitCouch){
