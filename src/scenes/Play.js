@@ -23,8 +23,9 @@ class Play extends Phaser.Scene {
 
         // Yumi (player) Creation ------------------------------
         yumiPlayer = this.physics.add.sprite(100, 425, "yumi")
-        yumiPlayer.setBounce(0.1)
+        // yumiPlayer.setBounce(0.1)
         yumiPlayer.setColliderWorldBounds = true
+        yumiPlayer.body.gravity.y = 1000
 
         // yumi animation setup
         this.anims.create({
@@ -105,7 +106,7 @@ class Play extends Phaser.Scene {
         
         // adding jump (just one)
         if (cursors.up.isDown && yumiPlayer.body.touching.down){
-            yumiPlayer.body.velocity.y = -250
+            yumiPlayer.body.velocity.y = -500
             this.jumpSfx.play()
         }
 
@@ -144,6 +145,7 @@ class Play extends Phaser.Scene {
         // not moving
         else {
             yumiPlayer.anims.stop()
+            yumiPlayer.anims.play({key: "walk", startFrame: 0}, true)
             couches.children.each(c => {
                 c.body.velocity.x = 0
             })

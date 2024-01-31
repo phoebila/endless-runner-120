@@ -34,7 +34,7 @@ class Loading extends Phaser.Scene {
 
         // assets
             // yumi cat
-        this.load.spritesheet('yumi', 'sprite/yumi.png', {
+        this.load.spritesheet('yumi', 'sprite/yumi.png', { //FIX SPRITESHEET
             frameWidth: 30,
             frameHeight: 16,
             startFrame: 0,
