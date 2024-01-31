@@ -52,27 +52,31 @@ class Play extends Phaser.Scene {
         // HOW 2 CREATE GROUP OF OBJECTS WITH PHYSICS?
 
         // carpet (ground) creation
-        carpet = this.add.group()
-        carpet.enableBody = true
+        carpet = this.physics.add.image(320.5, h+200, "carpet")
+        carpet.setImmoveable = true
+        carpet.body.allowGravity = false
+        carpet.setVelocityX(0)
 
-        var carpetGr = carpet.create(320.5, h+400, "carpet")
-        carpetGr.setScale(2, 2)
-        carpetGr.setImmoveable = true
+        // OLD HEAD CODE -----------------------------------------
+        // carpet = this.add.group()
+        // carpet.enableBody = true
 
-        // green couch platforms
-        couches = this.add.group()
-        couches.enableBody = true
+        // var carpetGr = carpet.create(320.5, h+400, "carpet")
+        // carpetGr.setScale(2, 2)
+        // carpetGr.setImmoveable = true
+        // OLD HEAD CODE -----------------------------------------
 
-        console.log(`couches physics: ${couches.enableBody}`);
+        // green couch platforms ---------------------------------
+        couches = this.physics.add.staticGroup()
 
         // adding randomized couch platforms
         for (let i = 0; i < 8; i++){
-            let couchPlat = couches.create(Phaser.Math.Between(300, w),
+            couches.create(Phaser.Math.Between(300, w),
             Phaser.Math.Between(h-100, h-300),
-            "couch")
+            "couch").setScale(Phaser.Math.Between(1, 10)/10, 1)
 
-            couchPlat.setScale(Phaser.Math.Between(1, 10)/10, 1)
-            couchPlat.setImmoveable = true
+            // couches.setScale(Phaser.Math.Between(1, 10)/10, 1)
+            couches.setImmoveable = true
         }
 
         // set up cursor keys (up to jump)

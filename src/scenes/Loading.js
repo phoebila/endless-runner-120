@@ -60,9 +60,9 @@ class Loading extends Phaser.Scene {
 
     create() {
         // START TITLE !!!
-        // this.scene.start('titleScene');
+        this.scene.start('titleScene');
 
         // debugging only
-        this.scene.start('playScene')
+        // this.scene.start('playScene')
     }
 }
