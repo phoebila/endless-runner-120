@@ -8,6 +8,8 @@ class Couch extends Phaser.Physics.Arcade.Sprite {
         this.parentScene.physics.add.existing(this)
         this.setVelocityX(velocity);            // make it go!
         this.setImmovable(); 
+        this.enableBody = true
+
         this.newCouch = true;
     }
 
