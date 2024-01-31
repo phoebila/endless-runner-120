@@ -1,9 +1,8 @@
 class Yumi extends Phaser.GameObjects.Sprite {
-    constructor(){
+    constructor(scene, x, y, texture, frame){
         super(scene, x, y, texture, frame)
         scene.add.existing(this)
 
-        this.moveable = true
         this.setCollideWorldBounds = true
         this.enableBody = true
     }

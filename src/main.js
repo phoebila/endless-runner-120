@@ -24,6 +24,16 @@
 // Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design (1)
 // --------------------------------------------------------------
 
+          //     _   _
+          //    /\\_//\
+          //   / o _ o \
+          //  /_   X   _\
+          //    \_____/
+          //    /  o  \
+          //   /       \__
+          //   \_(_|_)___ \
+          //          (___/
+
 
 let config = {
     type: Phaser.AUTO,
@@ -32,7 +42,13 @@ let config = {
     },
     width: 640,
     height: 480,
-    scene: [Loading, Title, Play, Ending]
+    scene: [Loading, Title, Play, Ending],
+    physics: {
+      default: "arcade",
+      arcade: {
+          debug: true
+      }
+    }
   }
 
 let game = new Phaser.Game(config);
@@ -50,6 +66,7 @@ let score
 let speed
 let carpet //ground
 let couches //platform
+let height
 
 // set UI sizes
 let borderUISize = game.config.height / 15

@@ -19,8 +19,6 @@ class Play extends Phaser.Scene {
         // add scrolling bg
         this.bg = this.add.tileSprite(0,0, 640, 480, 'catBG').setOrigin(0,0).setScrollFactor(0,1)
 
-        // REV PHYSICS ENGINE
-        game.physics.startSystem(Phaser.Physics.ARCADE)
 
         // adding score keeping
         score = 0
@@ -28,10 +26,10 @@ class Play extends Phaser.Scene {
         // display score
         let scoreConfig = {
             fontFamily: 'quicksand',
-            fontSize: '16px',
+            fontSize: '28px',
             backgroundColor: '#b3325f',
             color: '#000',
-            align: 'right',
+            align: 'center',
             padding: {
             top: 5,
             bottom: 5,
@@ -39,7 +37,7 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
         // adding score rectangle
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x62289c).setOrigin(0, 0)
+        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2).setOrigin(0, 0)
         // adding score text
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, score, scoreConfig)
         
@@ -47,26 +45,29 @@ class Play extends Phaser.Scene {
         speed = 1
 
         // carpet (ground) creation
-        carpet = game.add.group()
-        carpet.enableBody = true
+        carpet = this.physics.add.sprite(321, h+200, "carpet")
 
-        var carpetGr = carpet.create(0, game.world.height - 64, "carpet")
-        carpetGr.scale.setTo(2, 2)
-        carpetGr.body.immovable = true
+        // carpet = this.add.group()
+        // carpet.enableBody = true
+
+        // var carpetGr = carpet.create(0, h - 64, "carpet")
+        // carpetGr.setScale(2, 2)
+        // carpetGr.setImmoveable = true
+
         
 
         // green couch platforms
-        couches = game.add.group()
+        couches = this.add.group()
         couches.enableBody = true
 
         // adding randomized couch platforms
         for (let i = 0; i < 8; i++){
-            let couchPlat = couches.create(game.rnd.integerInRange(300, game.stage.width),
-            game.rnd.integerInRange(game.height-100, game.height-300),
+            let couchPlat = couches.create(Phaser.Math.Between(300, w),
+            Phaser.Math.Between(h-100, h-300),
             "couch")
 
-            couchPlat.scale.setTo(game.rnd.integerInRange(1, 10)/10, 1)
-            couchPlat.body.immovable = true
+            couchPlat.setScale(Phaser.Math.Between(1, 10)/10, 1)
+            couchPlat.setImmoveable = true
         }
 
         // Yumi (player) Creation
@@ -82,15 +83,15 @@ class Play extends Phaser.Scene {
     update(){
 
         // checking if Yumi is blocked by couch
-        var hitCouch = (game.physics.arcade.collide(Yumi, couches))
+        var hitCouch = this.physics.collide(Yumi, couches)
         // adding jump (just one)
         if (cursors.up.isDown && Yumi.body.touching.down && hitCouch){
             Yumi.body.velocity.y = -500
         }
 
         // check for collisions (couches and ground)
-        var onCouch = (game.physics.arcade.collide(Yumi, couches) ||
-        game.physics.arcade.collide(Yumi, carpet));
+        var onCouch = (this.physics.collide(Yumi, couches) ||
+        this.physics.collide(Yumi, carpet));
         
         // pushing yumi back
         if (onCouch){
@@ -98,7 +99,7 @@ class Play extends Phaser.Scene {
         }
 
         // checking if yumi is on the ground
-        var onCarpet = Yumi.body.touching.down
+        // var onCarpet = Yumi.body.touching.down
 
         //adding sound effects!
         // score celebration
@@ -123,14 +124,14 @@ class Play extends Phaser.Scene {
             let height = 1
 
             // moving couches to left when yumi runs right
-            couches.forEach(function(c){
+            couches.forEach(c => {
                 c.body.velocity.x = -800
                 if (height > 3){
                     height = 1
                 }
                 if (c.x < -game.stage.width/3){
-                    c.x = game.rnd.integerInRange(game.width, game.width + 300)
-                    c.y = game.rnd.integerInRange(0, game.height- (100 * height))
+                    c.x = Phaser.Math.Between(game.width, game.width + 300)
+                    c.y = Phaser.Math.Between(0, h- (100 * height))
                     height++
                     score++
                     // update score
@@ -145,14 +146,14 @@ class Play extends Phaser.Scene {
             Yumi.animations.play("run")
             let height = 1
 
-            couches.forEach(function(c){
+            couches.forEach(c => {
                 c.body.velocity.x = -1000
                 if (height > 3){
                     height = 1
                 }
                 if (c.x < -game.stage.width/3){
-                    c.x = game.rnd.integerInRange(game.width, game.width + 300)
-                    c.y = game.rnd.integerInRange(0, game.height- (100 * height))
+                    c.x = Phaser.Math.Between(game.width, game.width + 300)
+                    c.y = Phaser.Math.Between(0, h- (100 * height))
                     height++
                     score++
                     // update score
@@ -168,14 +169,14 @@ class Play extends Phaser.Scene {
             Yumi.animations.play("crawl")
             let height = 1
 
-            couches.forEach(function(c){
+            couches.forEach(c => {
                 c.body.velocity.x = -600
                 if (height > 3){
                     height = 1
                 }
                 if (c.x < -game.stage.width/3){
-                    c.x = game.rnd.integerInRange(game.width, game.width + 300)
-                    c.y = game.rnd.integerInRange(0, game.height- (100 * height))
+                    c.x = Phaser.Math.Between(game.width, game.width + 300)
+                    c.y = Phaser.Math.Between(0, h- (100 * height))
                     height++
                     score++
                     // update score
@@ -185,10 +186,10 @@ class Play extends Phaser.Scene {
 
         }
         // not moving
-        else {
-            Yumi.animations.stop()
-            Yumi.frame = 0
-            couches.forEach(function(c){
+        else if (speed < 0){
+            // Yumi.animations.stop()
+            // Yumi.frame = 0
+            couches.forEach(c => {
                 c.body.velocity.x = 0
             })
         }
