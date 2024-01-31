@@ -57,14 +57,12 @@ class Play extends Phaser.Scene {
         
         speed = 1
 
-        // carpet (ground) creation ------------------------------
-        carpet = this.physics.add.image(320.5, h+200, "carpet")
-        carpet.setImmoveable = true
-        carpet.body.allowGravity = false
-        carpet.setVelocityX(0)
+        
 
         // green couch platforms ---------------------------------
-        couches = this.physics.add.staticGroup()
+        couches = this.physics.add.staticGroup({
+            runChildUpdate: true
+        })
 
         // adding randomized couch platforms
         for (let i = 0; i < 8; i++){
@@ -75,6 +73,11 @@ class Play extends Phaser.Scene {
             // couches.setScale(Phaser.Math.Between(1, 10)/10, 1)
             couches.setImmoveable = true
         }
+        // carpet (ground) creation ------------------------------
+        carpet = couches.create(320.5, h+200, "carpet")
+
+        this.physics.add.collider(yumiPlayer, carpet);
+        this.physics.add.collider(yumiPlayer, couches);
 
         // set up cursor keys (up to jump) --------------------------
         cursors = this.input.keyboard.createCursorKeys();
@@ -106,8 +109,8 @@ class Play extends Phaser.Scene {
         }
         
         // adding jump (just one)
-        if (cursors.up.isDown && yumiPlayer.body.touching.down && hitCouch){
-            yumiPlayer.body.velocity.y = -500
+        if (cursors.up.isDown && yumiPlayer.body.touching.down){
+            yumiPlayer.body.velocity.y = -250
         }
 
         // check for collisions (couches and ground)
@@ -140,12 +143,14 @@ class Play extends Phaser.Scene {
 
             // moving couches to left when yumi runs right
             couches.children.each(c => {
+                // console.log(c);
                 c.body.velocity.x = -800
                 if (height > 3){
                     height = 1
                 }
-                if (c.x < -w/3){
-                    c.x = Phaser.Math.Between(game.width, game.width + 300)
+                if (c.x < -game.config.width/3){ // fix this if statement
+                    console.log('inside the if statement');
+                    c.x = Phaser.Math.Between(game.config.width, game.config.width + 300)
                     c.y = Phaser.Math.Between(0, h- (100 * height))
                     height++
                     score++
@@ -153,9 +158,9 @@ class Play extends Phaser.Scene {
                     this.scoreLeft.text = score
                 }
             })
-            }
+        }
         // not moving
-        else if (speed < 0){
+        else {
             yumiPlayer.anims.stop()
             couches.children.each(c => {
                 c.body.velocity.x = 0
@@ -163,17 +168,15 @@ class Play extends Phaser.Scene {
         }
 
         // death noise + end scene
-        if(yumiPlayer.x < 0 || yumiPlayer.y > 500 || speed < 0) { // player leaves screen, or gets too slow, then dies
+        if(yumiPlayer.x < 0 || yumiPlayer.y > 500) { // player leaves screen, or gets too slow, then dies
             this.death.play();
             this.music.stop()
             yumiPlayer.destroy()
             this.scene.start("endingScene", score);
         }
-
     }
-
 }
 
 // help with:
     // get couches to move left
-    // get yumi to jump
+    // get yumi physics
