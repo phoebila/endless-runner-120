@@ -66,7 +66,7 @@ class Play extends Phaser.Scene {
         for (let i = 0; i < 10; i++){
             couches.create(Phaser.Math.Between(300, w),
             Phaser.Math.Between(h-50, h-300),
-            "couch").setScale(Phaser.Math.Between(5, 12)/10, 1).setImmovable(true)
+            "couch").setScale(Phaser.Math.Between(10, 25)/10, 1).setImmovable(true)
         }
 
         for (const couch of couches.getChildren()){ // making sure the platforms don't fall through scene
