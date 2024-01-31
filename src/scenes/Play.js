@@ -11,7 +11,7 @@ class Play extends Phaser.Scene {
         this.music.play();
 
         // add point celebration noise
-        this.pointCelebrate = this.sound.add('cat-squeak',{volume: .5} )
+        this.pointCelebrate = this.sound.add('cat-purr',{volume: .5} )
 
         // add jump noise
         this.jumpSfx = this.sound.add('cat-squeak', {volume: .5})
@@ -81,7 +81,6 @@ class Play extends Phaser.Scene {
     }
 
     update(){ // HALP!!!
-        // this.bg.tilePositionX -= speed
 
         // debugging --------------------------------------------------
         if (cursors.right.isDown){
@@ -229,3 +228,9 @@ class Play extends Phaser.Scene {
     }
 
 }
+
+// help with:
+    // create groups with physics
+        // how to detect collisions between groups and pc?
+    // fix Yumi (pc) animation
+    // enable scrolling camera
