@@ -23,7 +23,17 @@ class Play extends Phaser.Scene {
         this.bg = this.add.tileSprite(0,0, 640, 480, 'catBG').setOrigin(0,0)
 
         // Yumi (player) Creation
-        yumiPlayer = new Yumi(this, 40, 385, 'yumi').setOrigin(0,0)
+        yumiPlayer = this.physics.add.sprite(100, 425, "yumi")
+        yumiPlayer.setBounce(0.2)
+        yumiPlayer.setColliderWorldBounds = true
+
+        // yumi animation setup
+        this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNumbers('yumi', {start: 0, end: 2}),
+            frameRate: 3,
+            repeat: -1
+        })
 
         // adding score keeping
         score = 0
@@ -49,22 +59,11 @@ class Play extends Phaser.Scene {
         //adding pickup speed --> HOW/WHEN TO UPDATE?
         speed = 1
 
-        // HOW 2 CREATE GROUP OF OBJECTS WITH PHYSICS?
-
         // carpet (ground) creation
         carpet = this.physics.add.image(320.5, h+200, "carpet")
         carpet.setImmoveable = true
         carpet.body.allowGravity = false
         carpet.setVelocityX(0)
-
-        // OLD HEAD CODE -----------------------------------------
-        // carpet = this.add.group()
-        // carpet.enableBody = true
-
-        // var carpetGr = carpet.create(320.5, h+400, "carpet")
-        // carpetGr.setScale(2, 2)
-        // carpetGr.setImmoveable = true
-        // OLD HEAD CODE -----------------------------------------
 
         // green couch platforms ---------------------------------
         couches = this.physics.add.staticGroup()
@@ -92,6 +91,7 @@ class Play extends Phaser.Scene {
         if (cursors.right.isDown){
             // console.log('this is hitting the right key');
             yumiPlayer.x += 15
+            yumiPlayer.anims.play('walk', true)
         }
 
         if (cursors.left.isDown){
