@@ -5,14 +5,16 @@ class Yumi extends Phaser.GameObjects.Sprite {
 
         this.setCollideWorldBounds = true
         this.enableBody = true
+
+        this.moveSpeed = speed
     }
 
     update(){
         // right movement
-        if (cursors.right.isDown && this.moveable){
-            if (this.x > this.x >= borderUISize + this.width){
+        if (cursors.right.isDown){
+            if (this.x >= borderUISize + this.width){
                 // move yumi right
-                this.x += game.settings.scrollSpeed/2
+                this.x -= 40
             }
         }
 

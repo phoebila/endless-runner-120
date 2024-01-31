@@ -13,12 +13,17 @@ class Play extends Phaser.Scene {
         // add point celebration noise
         this.pointCelebrate = this.sound.add('cat-squeak',{volume: .5} )
 
+        // add jump noise
+        this.jumpSfx = this.sound.add('cat-squeak', {volume: .5})
+
         // add death noise
         this.death = this.sound.add('cat-angry', {volume: .5})
 
         // add scrolling bg
         this.bg = this.add.tileSprite(0,0, 640, 480, 'catBG').setOrigin(0,0).setScrollFactor(0,1)
 
+        // Yumi (player) Creation
+        yumiPlayer = new Yumi(this, 40, 385, 'yumi').setOrigin(0,0)
 
         // adding score keeping
         score = 0
@@ -44,17 +49,15 @@ class Play extends Phaser.Scene {
         //adding pickup speed --> HOW/WHEN TO UPDATE?
         speed = 1
 
+        // HOW 2 CREATE GROUP OF OBJECTS WITH PHYSICS?
+
         // carpet (ground) creation
-        carpet = this.physics.add.sprite(321, h+200, "carpet")
+        carpet = this.add.group()
+        carpet.enableBody = true
 
-        // carpet = this.add.group()
-        // carpet.enableBody = true
-
-        // var carpetGr = carpet.create(0, h - 64, "carpet")
-        // carpetGr.setScale(2, 2)
-        // carpetGr.setImmoveable = true
-
-        
+        var carpetGr = carpet.create(320.5, h+400, "carpet")
+        carpetGr.setScale(2, 2)
+        carpetGr.setImmoveable = true
 
         // green couch platforms
         couches = this.add.group()
@@ -70,9 +73,6 @@ class Play extends Phaser.Scene {
             couchPlat.setImmoveable = true
         }
 
-        // Yumi (player) Creation
-        Yumi = new Yumi(this, 40, 2 * game.config.height / 3, 'yumi').setOrigin(0,0)
-
         // set up cursor keys (up to jump)
         cursors = this.input.keyboard.createCursorKeys();
         // setting restart button
@@ -80,23 +80,40 @@ class Play extends Phaser.Scene {
 
     }
 
-    update(){
+    update(){ // HALP!!!
+
+        // debugging --------------------------------------------------
+        if (cursors.right.isDown){
+            // console.log('this is hitting the right key');
+            yumiPlayer.x += 15
+        }
+
+        if (cursors.left.isDown){
+            yumiPlayer.x -= 15
+        }
+
+        if (cursors.up.isDown){
+            yumiPlayer.y -= 5
+            this.jumpSfx.play()
+        }
+        // --------------------------------------------------
 
         // checking if Yumi is blocked by couch
-        var hitCouch = this.physics.collide(Yumi, couches)
+        var hitCouch = this.physics.collide(yumiPlayer, couches)
+        
         // adding jump (just one)
-        if (cursors.up.isDown && Yumi.body.touching.down && hitCouch){
-            Yumi.body.velocity.y = -500
-        }
+        // if (cursors.up.isDown && yumiPlayer.body.touching.down && hitCouch){
+        //     yumiPlayer.body.velocity.y = -500
+        // }
 
         // check for collisions (couches and ground)
-        var onCouch = (this.physics.collide(Yumi, couches) ||
-        this.physics.collide(Yumi, carpet));
+        // var onCouch = (this.physics.collide(yumiPlayer, couches) ||
+        // this.physics.collide(yumiPlayer, carpet));
         
-        // pushing yumi back
-        if (onCouch){
-            Yumi.x = 50
-        }
+        // pushing yumiPlayer back
+        // if (onCouch){
+        //     yumiPlayer.x -= 50
+        // }
 
         // checking if yumi is on the ground
         // var onCarpet = Yumi.body.touching.down
@@ -117,19 +134,22 @@ class Play extends Phaser.Scene {
             }
         }
         
-        // animation styles (YIPPEE)
+        // Basic side scrolling movement -------------------------------------------------------------------
+        // Randomly generating green couches
+
+        // how to get side scrolling effect?
         if (cursors.right.isDown && speed == 1){
-            this.bg.tilePosition.x -= 2
-            Yumi.animations.play("walk")
+            this.bg.tilePositionX -= 2
+            // get anims working
+            // Yumi.animations.play("walk")
             let height = 1
 
             // moving couches to left when yumi runs right
-            couches.forEach(c => {
-                c.body.velocity.x = -800
+            couches.children.each(function(c){
                 if (height > 3){
                     height = 1
                 }
-                if (c.x < -game.stage.width/3){
+                if (c.x < -w/3){
                     c.x = Phaser.Math.Between(game.width, game.width + 300)
                     c.y = Phaser.Math.Between(0, h- (100 * height))
                     height++
@@ -140,18 +160,18 @@ class Play extends Phaser.Scene {
             })
             }
 
-        // SPEEDING THINGS UP BUCKO
+        // SPEEDING THINGS UP BUCKO -------------------------------------------------------------------
         if (cursors.right.isDown && speed == 2){
-            this.bg.tilePosition.x -= 3
-            Yumi.animations.play("run")
+            this.bg.tilePositionX -= 3
+            // get anims working
+            // Yumi.animations.play("run")
             let height = 1
 
-            couches.forEach(c => {
-                c.body.velocity.x = -1000
+            couches.children.each(c => {
                 if (height > 3){
                     height = 1
                 }
-                if (c.x < -game.stage.width/3){
+                if (c.x < -w/3){
                     c.x = Phaser.Math.Between(game.width, game.width + 300)
                     c.y = Phaser.Math.Between(0, h- (100 * height))
                     height++
@@ -163,18 +183,19 @@ class Play extends Phaser.Scene {
 
         }
 
-        // slowing things down
+        // slowing things down -------------------------------------------------------------------
         else if (cursors.right.isDown && speed == 0){
-            this.bg.tilePosition.x -= 1
-            Yumi.animations.play("crawl")
+            this.bg.tilePositionX -= 1
+
+            // get anims working
+            // Yumi.animations.play("crawl")
             let height = 1
 
-            couches.forEach(c => {
-                c.body.velocity.x = -600
+            couches.children.each(c => {
                 if (height > 3){
                     height = 1
                 }
-                if (c.x < -game.stage.width/3){
+                if (c.x < -w/3){
                     c.x = Phaser.Math.Between(game.width, game.width + 300)
                     c.y = Phaser.Math.Between(0, h- (100 * height))
                     height++
@@ -189,17 +210,17 @@ class Play extends Phaser.Scene {
         else if (speed < 0){
             // Yumi.animations.stop()
             // Yumi.frame = 0
-            couches.forEach(c => {
+            couches.children.each(c => {
                 c.body.velocity.x = 0
             })
         }
 
         // death noise + end scene
         // on death --> this.scene.start('endingScene'), stop music
-        if(Yumi.x < 0 || Yumi.y > 500 || speed < 0) { // player leaves screen, or gets too slow, then dies
+        if(yumiPlayer.x < 0 || yumiPlayer.y > 500 || speed < 0) { // player leaves screen, or gets too slow, then dies
             this.death.play();
             this.music.stop()
-            Yumi.destroy()
+            // yumiPlayer.destroy()
             this.scene.start("endingScene", score);
         }
 

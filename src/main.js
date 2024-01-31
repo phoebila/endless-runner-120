@@ -67,6 +67,7 @@ let speed
 let carpet //ground
 let couches //platform
 let height
+let yumiPlayer
 
 // set UI sizes
 let borderUISize = game.config.height / 15

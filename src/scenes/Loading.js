@@ -50,7 +50,7 @@ class Loading extends Phaser.Scene {
             // jump sound -> mew (meowing)
         this.load.audio('cat-mew', 'audio/cat_mew.mp3')
             // landing sound -> collision (purr)
-        this.load.audio('cat-pur', 'audio/cat_purr.mp3')
+        this.load.audio('cat-purr', 'audio/cat_purr.mp3')
             // death -> angry 
         this.load.audio('cat-angry', 'audio/cat_angry.mp3')
 
@@ -60,6 +60,9 @@ class Loading extends Phaser.Scene {
 
     create() {
         // START TITLE !!!
-        this.scene.start('titleScene');
+        // this.scene.start('titleScene');
+
+        // debugging only
+        this.scene.start('playScene')
     }
 }
