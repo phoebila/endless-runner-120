@@ -21,6 +21,9 @@ class Title extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(cursors.up)){
             this.playSound.play()
             this.scene.start('playScene')
+
+            // testing purposes
+            // this.scene.start('endingScene')
         }
     }
 }

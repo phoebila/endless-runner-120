@@ -23,16 +23,26 @@ class Loading extends Phaser.Scene {
         this.load.image('yumiMenu', 'sprite/yumiMenu.png')
 
         //background --> gradient background with various cattoys
-        // this.load.image('catBG', 'sprite/cat_BG.png')
+        this.load.image('catBG', 'sprite/cat_BG.png')
 
         // game over screen --> cat butthole?
+        this.load.image('gameOver', 'sprite/yumiEnding.png')
+
 
         // ground --> pink carpet
-        // this.load.image('carpet', 'sprite/carpet.png')
+        this.load.image('carpet', 'sprite/pinkcarpet.png')
 
         // assets
             // yumi cat
+        this.load.image('yumi', 'sprite/yumi.png', {
+            frameWidth: 30,
+            frameHeight: 16,
+            startFrame: 0,
+            endFrame: 2
+        })
             // green couch platforms
+        this.load.image('couch', 'sprite/couch.png')
+
         
         //load audio
             // start (cat squeak)
