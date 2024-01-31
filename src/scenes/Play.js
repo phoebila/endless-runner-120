@@ -97,10 +97,10 @@ class Play extends Phaser.Scene {
             // yumiPlayer.anims.play('walk', true)
         // }
         // checking if Yumi is blocked by couch
-        var hitCouch = this.physics.collide(yumiPlayer, couches)
-        if (hitCouch == true){
-            console.log('couch has been collided with by yumi');
-        }
+        // var hitCouch = this.physics.collide(yumiPlayer, couches)
+        // if (hitCouch == true){
+        //     console.log('couch has been collided with by yumi');
+        // }
         // --------------------------------------------------
         
         // adding jump (just one)
