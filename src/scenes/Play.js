@@ -63,7 +63,7 @@ class Play extends Phaser.Scene {
         couches.enableBody = true
 
         // adding randomized couch platforms
-        for (let i = 0; i < 8; i++){
+        for (let i = 0; i < 10; i++){
             couches.create(Phaser.Math.Between(300, w),
             Phaser.Math.Between(h-50, h-300),
             "couch").setScale(Phaser.Math.Between(5, 12)/10, 1).setImmovable(true)
