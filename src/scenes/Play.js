@@ -20,7 +20,7 @@ class Play extends Phaser.Scene {
         this.death = this.sound.add('cat-angry', {volume: .5})
 
         // add scrolling bg
-        this.bg = this.add.tileSprite(0,0, 640, 480, 'catBG').setOrigin(0,0).setScrollFactor(0,1)
+        this.bg = this.add.tileSprite(0,0, 640, 480, 'catBG').setOrigin(0,0)
 
         // Yumi (player) Creation
         yumiPlayer = new Yumi(this, 40, 385, 'yumi').setOrigin(0,0)
@@ -81,6 +81,7 @@ class Play extends Phaser.Scene {
     }
 
     update(){ // HALP!!!
+        // this.bg.tilePositionX -= speed
 
         // debugging --------------------------------------------------
         if (cursors.right.isDown){
@@ -224,8 +225,6 @@ class Play extends Phaser.Scene {
             this.scene.start("endingScene", score);
         }
 
-        // update background
-        this.bg.setTilePosition(this.cameras.main.scrollX)
     }
 
 }
