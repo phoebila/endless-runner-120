@@ -81,9 +81,26 @@ class Play extends Phaser.Scene {
         carpet.create(320.5, h+200, "carpet").refreshBody()
         
 
+        // adding treat incentive ------------------------------
+        treat = this.physics.add.group()
+        treat.enableBody = true
+
+        // adding randomized treats
+        for (let i = 0; i < 8; i++){
+            treat.create((Phaser.Math.Between(300, w) + 10),
+            (Phaser.Math.Between(h-50, h-300)+ 10),
+            "treat").setScale(Phaser.Math.Between(10, 15)/10, 1).setImmovable(false)
+        }
+
+        for (const treato of treat.getChildren()){ // making sure the platforms don't fall through scene
+            treato.body.setAllowGravity(false)
+        }
+
         this.physics.add.collider(yumiPlayer, carpet);
         this.physics.add.collider(yumiPlayer, couches);
         this.physics.add.collider(couches, carpet);
+
+        this.physics.add.overlap(yumiPlayer, treat, this.collectTreat, null, this);
 
         // set up cursor keys (up to jump) --------------------------
         cursors = this.input.keyboard.createCursorKeys();
@@ -107,6 +124,7 @@ class Play extends Phaser.Scene {
         // }
         // --------------------------------------------------
         
+
         // adding jump (just one)
         if (cursors.up.isDown && yumiPlayer.body.touching.down){
             yumiPlayer.body.velocity.y = -600
@@ -140,11 +158,29 @@ class Play extends Phaser.Scene {
                     couch.x = Phaser.Math.Between(w, w + 600)
                     couch.y = Phaser.Math.Between(100, 400)
                     height++
-                    score++
-                    // update score
-                    this.scoreLeft.text = score
                 }
             }
+            
+            //recycling treat asset
+            for (const treato of treat.getChildren()){ 
+                treato.body.velocity.x = -400
+
+                if (treato.x < -w){
+                    treato.x = (Phaser.Math.Between(w, w + 600))
+                    treato.y = (Phaser.Math.Between(100, 400))
+                    height++
+
+                    treat.create((Phaser.Math.Between(300, w) + 10),
+                    (Phaser.Math.Between(h-50, h-300)+ 10),
+                    "treat").setScale(Phaser.Math.Between(10, 15)/10, 1).setImmovable(false)
+                    for (const treato of treat.getChildren()){ // making sure the platforms don't fall through scene
+                        treato.body.setAllowGravity(false)
+                    }
+                }
+
+                
+            }
+
         }
         // not moving
         else {
@@ -152,6 +188,10 @@ class Play extends Phaser.Scene {
             yumiPlayer.anims.play({key: "walk", startFrame: 0}, true)
             couches.children.each(c => {
                 c.body.velocity.x = 0
+            })
+
+            treat.children.each(t => {
+                t.body.velocity.x = 0
             })
         }
 
@@ -162,5 +202,15 @@ class Play extends Phaser.Scene {
             yumiPlayer.destroy()
             this.scene.start("endingScene", score);
         }
+
+    }
+
+    collectTreat (player, treat) //collect treat func
+    {
+        treat.disableBody(true, true);
+        score++
+        // update score
+        this.scoreLeft.text = score
+        
     }
 }

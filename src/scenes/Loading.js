@@ -46,6 +46,9 @@ class Loading extends Phaser.Scene {
         // sign for controls
         this.load.image('controls', '/sprite/signPlay.png')
 
+        // treat incentive
+        this.load.image('treat', '/sprite/treat.png')
+
         
         //load audio
             // start (cat squeak)
