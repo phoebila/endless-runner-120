@@ -35,7 +35,7 @@ class Loading extends Phaser.Scene {
         // assets
             // yumi cat
         this.load.spritesheet('yumi', 'sprite/yumi.png', { //FIX SPRITESHEET
-            frameWidth: 30,
+            frameWidth: 31,
             frameHeight: 16,
             startFrame: 0,
             endFrame: 2
@@ -44,6 +44,7 @@ class Loading extends Phaser.Scene {
         this.load.image('couch', 'sprite/couch.png')
 
         // sign for controls
+        this.load.image('controls', '/sprite/signPlay.png')
 
         
         //load audio

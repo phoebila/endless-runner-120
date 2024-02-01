@@ -21,8 +21,11 @@ class Play extends Phaser.Scene {
         // add scrolling bg
         this.bg = this.add.tileSprite(0,0, 640, 480, 'catBG').setOrigin(0,0)
 
+        // add controls
+        this.controls = this.add.image(100,300, "controls").setOrigin(0, 0)
+
         // Yumi (player) Creation ------------------------------
-        yumiPlayer = this.physics.add.sprite(100, 425, "yumi")
+        yumiPlayer = this.physics.add.sprite(100, 425, "yumi").setScale(1.5)
         // yumiPlayer.setBounce(0.1)
         yumiPlayer.setColliderWorldBounds = true
         yumiPlayer.body.gravity.y = 1000
@@ -42,7 +45,7 @@ class Play extends Phaser.Scene {
         let scoreConfig = {
             fontFamily: 'quicksand',
             fontSize: '28px',
-            backgroundColor: '#b3325f',
+            backgroundColor: '#cf5f8d',
             color: '#000',
             align: 'center',
             padding: {
@@ -106,7 +109,8 @@ class Play extends Phaser.Scene {
         
         // adding jump (just one)
         if (cursors.up.isDown && yumiPlayer.body.touching.down){
-            yumiPlayer.body.velocity.y = -500
+            yumiPlayer.body.velocity.y = -600
+            this.controls.destroy()
             this.jumpSfx.play()
         }
 
@@ -132,9 +136,9 @@ class Play extends Phaser.Scene {
                     height = 1
                 }
 
-                if (couch.x < -w/2){ // fix couch coord generation
-                    couch.x = Phaser.Math.Between(w, w + 300)
-                    couch.y = Phaser.Math.Between(0, h-(100 * height))
+                if (couch.x < -w/2){
+                    couch.x = Phaser.Math.Between(w, w + 600)
+                    couch.y = Phaser.Math.Between(100, 400)
                     height++
                     score++
                     // update score
@@ -160,7 +164,3 @@ class Play extends Phaser.Scene {
         }
     }
 }
-
-// help with:
-    // get couches to move left
-    // get yumi physics

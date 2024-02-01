@@ -42,7 +42,7 @@ let config = {
     },
     width: 640,
     height: 480,
-    scene: [Loading, Title, Play, Ending],
+    scene: [Loading, Title, Play, Ending, Credits],
     physics: {
       default: "arcade",
       arcade: {
@@ -57,6 +57,7 @@ let game = new Phaser.Game(config);
 
 // define globals
 let keyRESET
+let keyMenu
 let centerX = game.config.width/2;
 let centerY = game.config.height/2;
 let w = game.config.width;
